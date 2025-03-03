@@ -1,12 +1,22 @@
 import { ClientRepository } from "@/core/domain/repositories/client-repository"
 
-export class SigmipUseCase {
+interface SignupRequest {
+    username: string
+    email: string
+    password: string
+}
+
+
+export class SignupUseCase {
     constructor(
-        private userRepository: ClientRepository
+        private clientRepository: ClientRepository
     ) { }
 
-    async execute(email: string) {
-        const user = await this.userRepository.findByEmail(email)
-        return user
+    async execute({username, email, password}: SignupRequest) {
+        await this.clientRepository.save({
+           username,
+           email,
+           password
+        });
     }
 }	

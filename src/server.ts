@@ -1,12 +1,9 @@
-import { AppDataSource } from "@/infrastructure/config/datasource"
 import { app } from "./app"
+import { AppDataSource } from "./data-source";
 
-AppDataSource.initialize().then(() => {
-  console.log("Data Source has been initialized!")
-}).catch((err) => {
-  console.error("Error during Data Source initialization", err)
-});
-
+AppDataSource.initialize()
+    .then(() => console.log("Banco de dados conectado!"))
+    .catch((error) => console.log("Erro ao conectar ao banco:", error));
 
 const start = async () => {
   try {

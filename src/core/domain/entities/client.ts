@@ -1,15 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "./order";
+import { Address } from "./address";
 
 @Entity('clients')
 export class Client {
     @PrimaryGeneratedColumn('uuid')
-    id: string
+    id?: string
 
     @Column({ type: "varchar", nullable: false })
-    firstname: string
-
-    @Column({ type: "varchar", nullable: true })
-    lastname: string
+    username: string
 
     @Column({ type: "varchar", unique: true })
     email: string
@@ -18,8 +17,14 @@ export class Client {
     password: string
 
     @Column({ type: "varchar", nullable: true })
-    avatar: string
+    avatar?: string
 
     @Column({ type: "date", default: () => "CURRENT_TIMESTAMP" })
-    createdAt: Date
+    createdAt?: Date
+
+    @OneToMany(() => Order, order => order.clientId)
+    orders?: Order[]
+
+    @OneToMany(() => Address, address => address.clientId)
+    addresses?: Address[]
 }
